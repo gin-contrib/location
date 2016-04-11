@@ -1,6 +1,6 @@
 # gin-location
 
-This Gin middle can be used to determine the server's hostname and scheme by inspecting information in the incoming http.Request. The alternative to this plugin would be explicitly providing such information to the server as a command line argument or environment variable.
+This Gin middle can be used to automatically find and expose the server's hostname and scheme by inspecting information in the incoming http.Request. The alternative to this plugin would be explicitly providing such information to the server as a command line argument or environment variable.
 
 ## Default
 
