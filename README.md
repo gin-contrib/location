@@ -1,6 +1,6 @@
 # gin-location
 
-gin middleware to provide the incoming http.Request hostname and scheme.
+This Gin middle can be used to determine the incoming http.Request hostname and scheme. This is useful when running a server that needs to know its own address (https://domain.com/...).
 
 ## Default
 
