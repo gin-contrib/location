@@ -1,6 +1,6 @@
 # gin-location
 
-This Gin middle can be used to determine the incoming http.Request hostname and scheme. This is useful when running a server that needs to know its own address (https://domain.com/...).
+This Gin middle can be used to determine the server's hostname and scheme by inspecting information in the incoming http.Request. The alternative to this plugin would be explicitly providing such information to the server as a command line argument or environment variable.
 
 ## Default
 
