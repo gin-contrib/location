@@ -1,14 +1,19 @@
-# gin-location
+# location
 
-This Gin middle can be used to automatically find and expose the server's hostname and scheme by inspecting information in the incoming http.Request. The alternative to this plugin would be explicitly providing such information to the server as a command line argument or environment variable.
+This Gin middleware can be used to automatically find and expose the server's
+hostname and scheme by inspecting information in the incoming `http.Request`.
+The alternative to this plugin would be explicitly providing such information to
+the server as a command line argument or environment variable.
 
-## Default
+## Usage
+
+### Default
 
 ```go
 package main
 
 import (
-	"github.com/drone/gin-location"
+	"github.com/gin-contrib/location"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,8 +25,9 @@ func main() {
 	// - use localhost:8080 when default host cannot be determined
 	router.Use(location.Default())
 
-	router.Get("/", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		url := location.Get(c)
+
 		// url.Scheme
 		// url.Host
 		// url.Path
@@ -31,13 +37,13 @@ func main() {
 }
 ```
 
-## Custom
+### Custom
 
 ```go
 package main
 
 import (
-	"github.com/drone/gin-location"
+	"github.com/gin-contrib/location"
 	"github.com/gin-gonic/gin"
 )
 
@@ -52,11 +58,12 @@ func main() {
 	router.Use(location.New(location.Config{
 		Scheme: "https",
 		Host: "foo.com",
-		Path: "/base",
+		Base: "/base",
 	}))
 
-	router.Get("/", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		url := location.Get(c)
+
 		// url.Scheme
 		// url.Host
 		// url.Path
@@ -65,3 +72,11 @@ func main() {
 	router.Run()
 }
 ```
+
+## Contributing
+
+Fork -> Patch -> Push -> Pull Request
+
+## License
+
+MIT
