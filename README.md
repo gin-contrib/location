@@ -1,7 +1,7 @@
 # location
 
 [![Build Status](https://travis-ci.org/gin-contrib/location.svg)](https://travis-ci.org/gin-contrib/location)
-[![Coverage Status](https://coveralls.io/repos/gin-contrib/location/badge.svg?branch=master)](https://coveralls.io/r/gin-contrib/location?branch=master)
+[![codecov](https://codecov.io/gh/gin-contrib/location/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-contrib/location)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/location)](https://goreportcard.com/report/github.com/gin-contrib/location)
 [![GoDoc](https://godoc.org/github.com/gin-contrib/location?status.svg)](https://godoc.org/github.com/gin-contrib/location)
 [![Join the chat at https://gitter.im/gin-gonic/gin](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gin-gonic/gin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
