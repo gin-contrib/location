@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/drone/gin-location"
+	"github.com/gin-contrib/location"
 	"github.com/gin-gonic/gin"
 )
 
