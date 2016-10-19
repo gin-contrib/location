@@ -22,6 +22,7 @@ type Config struct {
 	Base string
 }
 
+// DefaultConfig returns a generic default configuration mapped to localhost.
 func DefaultConfig() Config {
 	return Config{
 		Host:   "localhost:8080",
@@ -29,7 +30,7 @@ func DefaultConfig() Config {
 	}
 }
 
-// Default returns the location middle with defualt configuration.
+// Default returns the location middleware with default configuration.
 func Default() gin.HandlerFunc {
 	config := DefaultConfig()
 	return New(config)
@@ -38,6 +39,7 @@ func Default() gin.HandlerFunc {
 // New returns the location middleware with user-defined custom configuration.
 func New(config Config) gin.HandlerFunc {
 	location := newLocation(config)
+
 	return func(c *gin.Context) {
 		location.applyToContext(c)
 	}
@@ -47,12 +49,16 @@ func New(config Config) gin.HandlerFunc {
 // context. If the location is not set a nil value is returned.
 func Get(c *gin.Context) *url.URL {
 	v, ok := c.Get(key)
+
 	if !ok {
 		return nil
 	}
+
 	vv, ok := v.(*url.URL)
+
 	if !ok {
 		return nil
 	}
+
 	return vv
 }
