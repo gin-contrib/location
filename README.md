@@ -1,14 +1,25 @@
-# gin-location
+# location
 
-This Gin middle can be used to automatically find and expose the server's hostname and scheme by inspecting information in the incoming http.Request. The alternative to this plugin would be explicitly providing such information to the server as a command line argument or environment variable.
+[![Build Status](https://travis-ci.org/gin-contrib/location.svg)](https://travis-ci.org/gin-contrib/location)
+[![codecov](https://codecov.io/gh/gin-contrib/location/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-contrib/location)
+[![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/location)](https://goreportcard.com/report/github.com/gin-contrib/location)
+[![GoDoc](https://godoc.org/github.com/gin-contrib/location?status.svg)](https://godoc.org/github.com/gin-contrib/location)
+[![Join the chat at https://gitter.im/gin-gonic/gin](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gin-gonic/gin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Default
+This Gin middleware can be used to automatically find and expose the server's
+hostname and scheme by inspecting information in the incoming `http.Request`.
+The alternative to this plugin would be explicitly providing such information to
+the server as a command line argument or environment variable.
+
+## Usage
+
+### Default
 
 ```go
 package main
 
 import (
-	"github.com/drone/gin-location"
+	"github.com/gin-contrib/location"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,8 +31,9 @@ func main() {
 	// - use localhost:8080 when default host cannot be determined
 	router.Use(location.Default())
 
-	router.Get("/", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		url := location.Get(c)
+
 		// url.Scheme
 		// url.Host
 		// url.Path
@@ -31,13 +43,13 @@ func main() {
 }
 ```
 
-## Custom
+### Custom
 
 ```go
 package main
 
 import (
-	"github.com/drone/gin-location"
+	"github.com/gin-contrib/location"
 	"github.com/gin-gonic/gin"
 )
 
@@ -52,11 +64,12 @@ func main() {
 	router.Use(location.New(location.Config{
 		Scheme: "https",
 		Host: "foo.com",
-		Path: "/base",
+		Base: "/base",
 	}))
 
-	router.Get("/", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		url := location.Get(c)
+
 		// url.Scheme
 		// url.Host
 		// url.Path
@@ -65,3 +78,11 @@ func main() {
 	router.Run()
 }
 ```
+
+## Contributing
+
+Fork -> Patch -> Push -> Pull Request
+
+## License
+
+MIT

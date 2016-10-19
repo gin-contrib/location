@@ -23,6 +23,7 @@ var tests = []struct {
 			URL:    &url.URL{},
 		},
 	},
+
 	// x-formward headers
 	{
 		want: "https://bar.com/bar",
@@ -35,6 +36,7 @@ var tests = []struct {
 			URL: &url.URL{},
 		},
 	},
+
 	// requests
 	{
 		want: "https://baz.com/bar",
@@ -46,6 +48,7 @@ var tests = []struct {
 			URL:    &url.URL{},
 		},
 	},
+
 	// tls
 	{
 		want: "https://foo.com/bar",
@@ -59,7 +62,6 @@ var tests = []struct {
 }
 
 func TestLocation(t *testing.T) {
-
 	for _, test := range tests {
 		c := new(gin.Context)
 		c.Request = test.req
@@ -67,6 +69,7 @@ func TestLocation(t *testing.T) {
 		loc.applyToContext(c)
 
 		got := Get(c)
+
 		if got.String() != test.want {
 			t.Errorf("wanted location %s, got %s", got.String(), test.want)
 		}
