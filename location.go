@@ -8,6 +8,7 @@ import (
 
 const key = "location"
 
+// Config represents all available options for the middleware.
 type Config struct {
 	// Scheme is the default scheme that should be used when it cannot otherwise
 	// be ascertained from the incoming http.Request.
