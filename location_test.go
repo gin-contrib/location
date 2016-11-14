@@ -16,11 +16,23 @@ var tests = []struct {
 }{
 	// defaults
 	{
-		want: "https://foo.com/bar",
-		conf: Config{"https", "foo.com", "/bar"},
+		want: "http://localhost:8080",
+		conf: DefaultConfig(),
 		req: &http.Request{
 			Header: http.Header{},
 			URL:    &url.URL{},
+		},
+	},
+
+	// url scheme
+	{
+		want: "https://localhost:8080",
+		conf: DefaultConfig(),
+		req: &http.Request{
+			Header: http.Header{},
+			URL: &url.URL{
+				Scheme: "https",
+			},
 		},
 	},
 
@@ -34,6 +46,30 @@ var tests = []struct {
 				"X-Forwarded-For":   {"bar.com"},
 			},
 			URL: &url.URL{},
+		},
+	},
+
+	// X-Host headers
+	{
+		want: "http://bar.com/bar",
+		conf: Config{"http", "foo.com", "/bar"},
+		req: &http.Request{
+			Header: http.Header{
+				"X-Host": {"bar.com"},
+			},
+			URL: &url.URL{},
+		},
+	},
+
+	// URL Host
+	{
+		want: "http://bar.com/bar",
+		conf: Config{"http", "foo.com", "/bar"},
+		req: &http.Request{
+			Header: http.Header{},
+			URL: &url.URL{
+				Host: "bar.com",
+			},
 		},
 	},
 
