@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/gin-contrib/location"
-	"github.com/gin-gonic/gin"
+	"github.com/marinsalinas/location"
+	"gopkg.in/gin-gonic/gin.v1"
 )
 
 func main() {
