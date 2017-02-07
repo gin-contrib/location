@@ -3,11 +3,17 @@ package location
 import (
 	"crypto/tls"
 	"net/http"
+	"net/http/httptest"
 	"net/url"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"gopkg.in/gin-gonic/gin.v1"
 )
+
+func init() {
+	gin.SetMode(gin.TestMode)
+}
 
 var tests = []struct {
 	want string
@@ -110,4 +116,53 @@ func TestLocation(t *testing.T) {
 			t.Errorf("wanted location %s, got %s", got.String(), test.want)
 		}
 	}
+}
+
+func defaultRouter() *gin.Engine {
+	router := gin.New()
+	router.Use(Default())
+
+	router.GET("/", func(c *gin.Context) {
+		url := Get(c)
+		c.String(200, url.String())
+	})
+
+	return router
+}
+
+func performRequest(r http.Handler, method string) *httptest.ResponseRecorder {
+	req, _ := http.NewRequest(method, "/", nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+	return w
+}
+
+func TestDefault(t *testing.T) {
+	router := defaultRouter()
+	w := performRequest(router, "GET")
+
+	assert.Equal(t, "http://localhost:8080", w.Body.String())
+}
+
+func customRouter(config Config) *gin.Engine {
+	router := gin.New()
+	router.Use(New(config))
+
+	router.GET("/", func(c *gin.Context) {
+		url := Get(c)
+		c.String(200, url.String())
+	})
+
+	return router
+}
+
+func TestCustom(t *testing.T) {
+	router := customRouter(Config{
+		Scheme: "https",
+		Host:   "foo.com",
+		Base:   "/base",
+	})
+	w := performRequest(router, "GET")
+
+	assert.Equal(t, "https://foo.com/base", w.Body.String())
 }
