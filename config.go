@@ -1,11 +1,10 @@
 package location
 
 import (
+	"gopkg.in/gin-gonic/gin.v1"
 	"net/http"
 	"net/url"
 	"strings"
-
-	"github.com/gin-gonic/gin"
 )
 
 type (
