@@ -7,8 +7,8 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/gin-gonic/gin.v1"
 )
 
 func init() {

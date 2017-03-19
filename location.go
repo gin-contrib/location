@@ -3,7 +3,7 @@ package location
 import (
 	"net/url"
 
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 )
 
 const key = "location"
