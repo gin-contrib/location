@@ -49,7 +49,7 @@ var tests = []struct {
 		req: &http.Request{
 			Header: http.Header{
 				"X-Forwarded-Proto": {"https"},
-				"X-Forwarded-For":   {"bar.com"},
+				"X-Forwarded-Host":   {"bar.com"},
 			},
 			URL: &url.URL{},
 		},
