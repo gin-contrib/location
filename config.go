@@ -29,7 +29,7 @@ func newLocation(config Config) *location {
 		base:   config.Base,
 		headers: headers{
 			scheme: "X-Forwarded-Proto",
-			host:   "X-Forwarded-For",
+			host:   "X-Forwarded-Host",
 		},
 	}
 }
