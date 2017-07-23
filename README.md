@@ -13,6 +13,20 @@ the server as a command line argument or environment variable.
 
 ## Usage
 
+### Start using it
+
+Download and install it:
+
+```bash
+$ go get github.com/gin-contrib/location
+```
+
+Import it in your code:
+
+```go
+import "github.com/gin-contrib/location"
+```
+
 ### Default
 
 ```go
