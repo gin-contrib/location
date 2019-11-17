@@ -13,12 +13,7 @@ type (
 		scheme  string
 		host    string
 		base    string
-		headers headers
-	}
-
-	headers struct {
-		scheme string
-		host   string
+		headers Headers
 	}
 )
 
@@ -27,10 +22,7 @@ func newLocation(config Config) *location {
 		scheme: config.Scheme,
 		host:   config.Host,
 		base:   config.Base,
-		headers: headers{
-			scheme: "X-Forwarded-Proto",
-			host:   "X-Forwarded-For",
-		},
+		headers: config.Headers,
 	}
 }
 
@@ -44,7 +36,7 @@ func (l *location) applyToContext(c *gin.Context) {
 
 func (l *location) resolveScheme(r *http.Request) string {
 	switch {
-	case r.Header.Get(l.headers.scheme) == "https":
+	case r.Header.Get(l.headers.Scheme) == "https":
 		return "https"
 	case r.URL.Scheme == "https":
 		return "https"
@@ -59,8 +51,8 @@ func (l *location) resolveScheme(r *http.Request) string {
 
 func (l *location) resolveHost(r *http.Request) (host string) {
 	switch {
-	case r.Header.Get(l.headers.host) != "":
-		return r.Header.Get(l.headers.host)
+	case r.Header.Get(l.headers.Host) != "":
+		return r.Header.Get(l.headers.Host)
 	case r.Header.Get("X-Host") != "":
 		return r.Header.Get("X-Host")
 	case r.Host != "":
