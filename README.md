@@ -1,6 +1,6 @@
 # location
 
-[![Build Status](https://travis-ci.org/gin-contrib/location.svg)](https://travis-ci.org/gin-contrib/location)
+[![Run Tests](https://github.com/gin-contrib/location/actions/workflows/go.yml/badge.svg?branch=master)](https://github.com/gin-contrib/location/actions/workflows/go.yml)
 [![codecov](https://codecov.io/gh/gin-contrib/location/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-contrib/location)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/location)](https://goreportcard.com/report/github.com/gin-contrib/location)
 [![GoDoc](https://godoc.org/github.com/gin-contrib/location?status.svg)](https://godoc.org/github.com/gin-contrib/location)
