@@ -1,6 +1,9 @@
 package main
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/gin-contrib/location"
 	"github.com/gin-gonic/gin"
 )
@@ -15,8 +18,10 @@ func main() {
 
 	router.GET("/", func(c *gin.Context) {
 		url := location.Get(c)
-		c.String(200, url.String())
+		c.String(http.StatusOK, url.String())
 	})
 
-	router.Run()
+	if err := router.Run(); err != nil {
+		log.Fatal(err)
+	}
 }
