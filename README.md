@@ -18,7 +18,7 @@ the server as a command line argument or environment variable.
 Download and install it:
 
 ```bash
-$ go get github.com/gin-contrib/location
+go get github.com/gin-contrib/location
 ```
 
 Import it in your code:
@@ -33,27 +33,27 @@ import "github.com/gin-contrib/location"
 package main
 
 import (
-	"github.com/gin-contrib/location"
-	"github.com/gin-gonic/gin"
+  "github.com/gin-contrib/location"
+  "github.com/gin-gonic/gin"
 )
 
 func main() {
-	router := gin.Default()
+  router := gin.Default()
 
-	// configure to automatically detect scheme and host
-	// - use http when default scheme cannot be determined
-	// - use localhost:8080 when default host cannot be determined
-	router.Use(location.Default())
+  // configure to automatically detect scheme and host
+  // - use http when default scheme cannot be determined
+  // - use localhost:8080 when default host cannot be determined
+  router.Use(location.Default())
 
-	router.GET("/", func(c *gin.Context) {
-		url := location.Get(c)
+  router.GET("/", func(c *gin.Context) {
+    url := location.Get(c)
 
-		// url.Scheme
-		// url.Host
-		// url.Path
-	})
+    // url.Scheme
+    // url.Host
+    // url.Path
+  })
 
-	router.Run()
+  router.Run()
 }
 ```
 
@@ -63,34 +63,34 @@ func main() {
 package main
 
 import (
-	"github.com/gin-contrib/location"
-	"github.com/gin-gonic/gin"
+  "github.com/gin-contrib/location"
+  "github.com/gin-gonic/gin"
 )
 
 func main() {
-	router := gin.Default()
+  router := gin.Default()
 
-	// configure to automatically detect scheme and host with
-	// fallback to https://foo.com/base
-	// - use https when default scheme cannot be determined
-	// - use foo.com when default host cannot be determined
-	// - include /base as the path
-	router.Use(location.New(location.Config{
-		Scheme: "https",
-		Host: "foo.com",
-		Base: "/base",
-		Headers: location.Headers{Scheme: "X-Forwarded-Proto", Host: "X-Forwarded-For"},
-	}))
+  // configure to automatically detect scheme and host with
+  // fallback to https://foo.com/base
+  // - use https when default scheme cannot be determined
+  // - use foo.com when default host cannot be determined
+  // - include /base as the path
+  router.Use(location.New(location.Config{
+    Scheme: "https",
+    Host: "foo.com",
+    Base: "/base",
+    Headers: location.Headers{Scheme: "X-Forwarded-Proto", Host: "X-Forwarded-For"},
+  }))
 
-	router.GET("/", func(c *gin.Context) {
-		url := location.Get(c)
+  router.GET("/", func(c *gin.Context) {
+    url := location.Get(c)
 
-		// url.Scheme
-		// url.Host
-		// url.Path
-	})
+    // url.Scheme
+    // url.Host
+    // url.Path
+  })
 
-	router.Run()
+  router.Run()
 }
 ```
 
