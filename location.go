@@ -8,6 +8,7 @@ import (
 
 const key = "location"
 
+// Headers represents the header fields used to map schemes and host.
 type Headers struct {
 	Scheme string
 	Host   string
