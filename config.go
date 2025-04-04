@@ -19,9 +19,9 @@ type (
 
 func newLocation(config Config) *location {
 	return &location{
-		scheme: config.Scheme,
-		host:   config.Host,
-		base:   config.Base,
+		scheme:  config.Scheme,
+		host:    config.Host,
+		base:    config.Base,
 		headers: config.Headers,
 	}
 }
@@ -35,15 +35,16 @@ func (l *location) applyToContext(c *gin.Context) {
 }
 
 func (l *location) resolveScheme(r *http.Request) string {
+	const HTTPS = "https"
 	switch {
-	case r.Header.Get(l.headers.Scheme) == "https":
-		return "https"
-	case r.URL.Scheme == "https":
-		return "https"
+	case r.Header.Get(l.headers.Scheme) == HTTPS:
+		return HTTPS
+	case r.URL.Scheme == HTTPS:
+		return HTTPS
 	case r.TLS != nil:
-		return "https"
+		return HTTPS
 	case strings.HasPrefix(r.Proto, "HTTPS"):
-		return "https"
+		return HTTPS
 	default:
 		return l.scheme
 	}

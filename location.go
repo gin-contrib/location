@@ -29,7 +29,7 @@ type Config struct {
 	Base string
 
 	// Header used to map schemes and host.
-	// May be overriden to allow reading values from custom header fields.
+	// May be overridden to allow reading values from custom header fields.
 	Headers Headers
 }
 
@@ -38,7 +38,7 @@ func DefaultConfig() Config {
 	return Config{
 		Host:   "localhost:8080",
 		Scheme: "http",
-		Headers: Headers {
+		Headers: Headers{
 			Scheme: "X-Forwarded-Proto",
 			Host:   "X-Forwarded-For",
 		},

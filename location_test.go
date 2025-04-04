@@ -1,6 +1,7 @@
 package location
 
 import (
+	"context"
 	"crypto/tls"
 	"net/http"
 	"net/http/httptest"
@@ -11,11 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func init() {
-	gin.SetMode(gin.TestMode)
-}
-
-var defaultHeaders = Headers {
+var defaultHeaders = Headers{
 	Scheme: "X-Forwarded-Proto",
 	Host:   "X-Forwarded-For",
 }
@@ -151,7 +148,7 @@ func defaultRouter() *gin.Engine {
 }
 
 func performRequest(r http.Handler, method string) *httptest.ResponseRecorder {
-	req, _ := http.NewRequest(method, "/", nil)
+	req, _ := http.NewRequestWithContext(context.Background(), method, "/", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 	return w
