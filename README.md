@@ -1,6 +1,6 @@
 # location
 
-[![Run Tests](https://github.com/gin-contrib/location/v2/actions/workflows/go.yml/badge.svg?branch=master)](https://github.com/gin-contrib/location/v2/actions/workflows/go.yml)
+[![Run Tests](https://github.com/gin-contrib/location/actions/workflows/go.yml/badge.svg)](https://github.com/gin-contrib/location/actions/workflows/go.yml)
 [![codecov](https://codecov.io/gh/gin-contrib/location/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-contrib/location)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/location/v2)](https://goreportcard.com/report/github.com/gin-contrib/location/v2)
 [![GoDoc](https://godoc.org/github.com/gin-contrib/location/v2?status.svg)](https://godoc.org/github.com/gin-contrib/location/v2)
