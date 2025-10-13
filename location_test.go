@@ -14,7 +14,7 @@ import (
 
 var defaultHeaders = Headers{
 	Scheme: "X-Forwarded-Proto",
-	Host:   "X-Forwarded-For",
+	Host:   "X-Forwarded-Host",
 }
 
 var tests = []struct {
@@ -44,14 +44,14 @@ var tests = []struct {
 		},
 	},
 
-	// x-formward headers
+	// x-forwarded headers
 	{
 		want: "https://bar.com/bar",
 		conf: Config{"http", "foo.com", "/bar", defaultHeaders},
 		req: &http.Request{
 			Header: http.Header{
 				"X-Forwarded-Proto": {"https"},
-				"X-Forwarded-For":   {"bar.com"},
+				"X-Forwarded-Host":  {"bar.com"},
 			},
 			URL: &url.URL{},
 		},
