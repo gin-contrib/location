@@ -40,7 +40,7 @@ func DefaultConfig() Config {
 		Scheme: "http",
 		Headers: Headers{
 			Scheme: "X-Forwarded-Proto",
-			Host:   "X-Forwarded-For",
+			Host:   "X-Forwarded-Host",
 		},
 	}
 }

@@ -78,7 +78,7 @@ func main() {
     Scheme: "https",
     Host: "foo.com",
     Base: "/base",
-    Headers: location.Headers{Scheme: "X-Forwarded-Proto", Host: "X-Forwarded-For"},
+    Headers: location.Headers{Scheme: "X-Forwarded-Proto", Host: "X-Forwarded-Host"},
   }))
 
   router.GET("/", func(c *gin.Context) {
