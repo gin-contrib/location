@@ -12,9 +12,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	testBarPath = "/bar"
+	testBarHost = "bar.com"
+	testBarURL  = "http://bar.com/bar"
+)
+
 var defaultHeaders = Headers{
-	Scheme: "X-Forwarded-Proto",
-	Host:   "X-Forwarded-Host",
+	Scheme: HeaderXForwardedProto,
+	Host:   HeaderXForwardedHost,
 }
 
 var tests = []struct {
@@ -47,11 +53,11 @@ var tests = []struct {
 	// x-forwarded headers
 	{
 		want: "https://bar.com/bar",
-		conf: Config{"http", "foo.com", "/bar", defaultHeaders},
+		conf: Config{HTTP, "foo.com", testBarPath, defaultHeaders},
 		req: &http.Request{
 			Header: http.Header{
-				"X-Forwarded-Proto": {"https"},
-				"X-Forwarded-Host":  {"bar.com"},
+				HeaderXForwardedProto: {HTTPS},
+				HeaderXForwardedHost:  {testBarHost},
 			},
 			URL: &url.URL{},
 		},
@@ -59,11 +65,11 @@ var tests = []struct {
 
 	// X-Host headers
 	{
-		want: "http://bar.com/bar",
-		conf: Config{"http", "foo.com", "/bar", defaultHeaders},
+		want: testBarURL,
+		conf: Config{HTTP, "foo.com", testBarPath, defaultHeaders},
 		req: &http.Request{
 			Header: http.Header{
-				"X-Host": {"bar.com"},
+				"X-Host": {testBarHost},
 			},
 			URL: &url.URL{},
 		},
@@ -71,12 +77,12 @@ var tests = []struct {
 
 	// URL Host
 	{
-		want: "http://bar.com/bar",
-		conf: Config{"http", "foo.com", "/bar", defaultHeaders},
+		want: testBarURL,
+		conf: Config{HTTP, "foo.com", testBarPath, defaultHeaders},
 		req: &http.Request{
 			Header: http.Header{},
 			URL: &url.URL{
-				Host: "bar.com",
+				Host: testBarHost,
 			},
 		},
 	},
@@ -84,7 +90,7 @@ var tests = []struct {
 	// requests
 	{
 		want: "https://baz.com/bar",
-		conf: Config{"http", "foo.com", "/bar", defaultHeaders},
+		conf: Config{HTTP, "foo.com", testBarPath, defaultHeaders},
 		req: &http.Request{
 			Proto:  "HTTPS://",
 			Host:   "baz.com",
@@ -96,7 +102,7 @@ var tests = []struct {
 	// tls
 	{
 		want: "https://foo.com/bar",
-		conf: Config{"http", "foo.com", "/bar", defaultHeaders},
+		conf: Config{HTTP, "foo.com", testBarPath, defaultHeaders},
 		req: &http.Request{
 			TLS:    &tls.ConnectionState{},
 			Header: http.Header{},
@@ -106,14 +112,14 @@ var tests = []struct {
 
 	// X-Forwarded-Host host header
 	{
-		want: "http://bar.com/bar",
-		conf: Config{"http", "foo.com", "/bar", Headers{
-			Scheme: "X-Forwarded-Proto",
-			Host:   "X-Forwarded-Host",
+		want: testBarURL,
+		conf: Config{HTTP, "foo.com", testBarPath, Headers{
+			Scheme: HeaderXForwardedProto,
+			Host:   HeaderXForwardedHost,
 		}},
 		req: &http.Request{
 			Header: http.Header{
-				"X-Forwarded-Host": {"bar.com"},
+				HeaderXForwardedHost: {testBarHost},
 			},
 			URL: &url.URL{},
 		},

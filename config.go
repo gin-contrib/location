@@ -35,7 +35,6 @@ func (l *location) applyToContext(c *gin.Context) {
 }
 
 func (l *location) resolveScheme(r *http.Request) string {
-	const HTTPS = "https"
 	switch {
 	case r.Header.Get(l.headers.Scheme) == HTTPS:
 		return HTTPS

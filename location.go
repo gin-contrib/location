@@ -6,7 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const key = "location"
+const (
+	key                   = "location"
+	HTTP                  = "http"
+	HTTPS                 = "https"
+	HeaderXForwardedProto = "X-Forwarded-Proto"
+	HeaderXForwardedHost  = "X-Forwarded-Host"
+)
 
 // Headers represents the header fields used to map schemes and host.
 type Headers struct {
@@ -37,10 +43,10 @@ type Config struct {
 func DefaultConfig() Config {
 	return Config{
 		Host:   "localhost:8080",
-		Scheme: "http",
+		Scheme: HTTP,
 		Headers: Headers{
-			Scheme: "X-Forwarded-Proto",
-			Host:   "X-Forwarded-Host",
+			Scheme: HeaderXForwardedProto,
+			Host:   HeaderXForwardedHost,
 		},
 	}
 }
