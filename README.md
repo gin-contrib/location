@@ -3,7 +3,6 @@
 [![Run Tests](https://github.com/gin-contrib/location/actions/workflows/go.yml/badge.svg)](https://github.com/gin-contrib/location/actions/workflows/go.yml)
 [![Trivy Security Scan](https://github.com/gin-contrib/location/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/gin-contrib/location/actions/workflows/trivy-scan.yml)
 [![codecov](https://codecov.io/gh/gin-contrib/location/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-contrib/location)
-[![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/location/v2)](https://goreportcard.com/report/github.com/gin-contrib/location/v2)
 [![GoDoc](https://godoc.org/github.com/gin-contrib/location/v2?status.svg)](https://godoc.org/github.com/gin-contrib/location/v2)
 
 A Gin middleware that automatically detects and exposes the server's hostname and scheme by inspecting the incoming `http.Request`. This is particularly useful when your application runs behind proxies or load balancers, as it intelligently determines the correct public-facing URL.
