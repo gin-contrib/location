@@ -38,8 +38,12 @@ func (l *location) resolveScheme(r *http.Request) string {
 	switch {
 	case r.Header.Get(l.headers.Scheme) == HTTPS:
 		return HTTPS
+	case r.Header.Get(l.headers.Scheme) == HTTP:
+		return HTTP
 	case r.URL.Scheme == HTTPS:
 		return HTTPS
+	case r.URL.Scheme == HTTP:
+		return HTTP
 	case r.TLS != nil:
 		return HTTPS
 	case strings.HasPrefix(r.Proto, "HTTPS"):

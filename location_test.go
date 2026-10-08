@@ -3,6 +3,7 @@ package location
 import (
 	"context"
 	"crypto/tls"
+	"maps"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -188,4 +189,121 @@ func TestCustom(t *testing.T) {
 	w := performRequest(router, "GET")
 
 	assert.Equal(t, "https://foo.com/base", w.Body.String())
+}
+
+func TestSchemePrecedence(t *testing.T) {
+	tests := []struct {
+		name       string
+		headerName string
+		headers    http.Header
+		urlScheme  string
+		tls        bool
+		proto      string
+		want       string
+	}{
+		{
+			name:    "proxy HTTP overrides fallback",
+			headers: http.Header{HeaderXForwardedProto: {HTTP}},
+			want:    HTTP,
+		},
+		{
+			name:      "URL HTTP overrides fallback",
+			urlScheme: HTTP,
+			want:      HTTP,
+		},
+		{
+			name:      "proxy HTTP precedes URL HTTPS",
+			headers:   http.Header{HeaderXForwardedProto: {HTTP}},
+			urlScheme: HTTPS,
+			want:      HTTP,
+		},
+		{
+			name:    "proxy HTTP precedes TLS",
+			headers: http.Header{HeaderXForwardedProto: {HTTP}},
+			tls:     true,
+			want:    HTTP,
+		},
+		{
+			name:      "URL HTTP precedes TLS",
+			urlScheme: HTTP,
+			tls:       true,
+			want:      HTTP,
+		},
+		{
+			name:      "proxy HTTPS precedes URL HTTP",
+			headers:   http.Header{HeaderXForwardedProto: {HTTPS}},
+			urlScheme: HTTP,
+			want:      HTTPS,
+		},
+		{
+			name:       "custom proxy HTTP precedes standard header",
+			headerName: "X-Public-Scheme",
+			headers: http.Header{
+				HeaderXForwardedProto: {HTTPS},
+				"X-Public-Scheme":     {HTTP},
+			},
+			urlScheme: HTTPS,
+			want:      HTTP,
+		},
+		{
+			name:      "unknown proxy scheme falls through to URL HTTP",
+			headers:   http.Header{HeaderXForwardedProto: {"ftp"}},
+			urlScheme: HTTP,
+			want:      HTTP,
+		},
+		{
+			name:    "unknown proxy scheme falls through to TLS",
+			headers: http.Header{HeaderXForwardedProto: {"ftp"}},
+			tls:     true,
+			want:    HTTPS,
+		},
+		{
+			name: "empty schemes use fallback",
+			want: HTTPS,
+		},
+		{
+			name:    "unknown proxy scheme uses fallback",
+			headers: http.Header{HeaderXForwardedProto: {"ftp"}},
+			want:    HTTPS,
+		},
+		{
+			name:      "unknown URL scheme uses fallback",
+			urlScheme: "ftp",
+			want:      HTTPS,
+		},
+		{
+			name:    "proxy HTTP precedes protocol detection",
+			headers: http.Header{HeaderXForwardedProto: {HTTP}},
+			proto:   "HTTPS://",
+			want:    HTTP,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			config := DefaultConfig()
+			config.Scheme = HTTPS
+			config.Base = testBarPath
+			if test.headerName != "" {
+				config.Headers.Scheme = test.headerName
+			}
+
+			request := httptest.NewRequest(http.MethodGet, "/", nil)
+			request.Host = testBarHost
+			request.URL.Scheme = test.urlScheme
+			maps.Copy(request.Header, test.headers)
+			if test.tls {
+				request.TLS = &tls.ConnectionState{}
+			}
+			if test.proto != "" {
+				request.Proto = test.proto
+			}
+
+			response := httptest.NewRecorder()
+			customRouter(config).ServeHTTP(response, request)
+
+			assert.Equal(t, http.StatusOK, response.Code)
+			assert.Equal(t, test.want+"://"+testBarHost+testBarPath, response.Body.String())
+		})
+	}
 }
