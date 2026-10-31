@@ -1,6 +1,6 @@
 # location
 
-[![Run Tests](https://github.com/gin-contrib/location/actions/workflows/go.yml/badge.svg)](https://github.com/gin-contrib/location/actions/workflows/go.yml)
+[![Lint and Testing](https://github.com/gin-contrib/location/actions/workflows/testing.yml/badge.svg)](https://github.com/gin-contrib/location/actions/workflows/testing.yml)
 [![Trivy Security Scan](https://github.com/gin-contrib/location/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/gin-contrib/location/actions/workflows/trivy-scan.yml)
 [![codecov](https://codecov.io/gh/gin-contrib/location/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-contrib/location)
 [![Go Reference](https://pkg.go.dev/badge/github.com/gin-contrib/location/v2.svg)](https://pkg.go.dev/github.com/gin-contrib/location/v2)
