@@ -1,7 +1,6 @@
 package location
 
 import (
-	"context"
 	"crypto/tls"
 	"net/http"
 	"net/http/httptest"
@@ -153,8 +152,8 @@ func defaultRouter() *gin.Engine {
 	return router
 }
 
-func performRequest(r http.Handler, method string) *httptest.ResponseRecorder {
-	req, _ := http.NewRequestWithContext(context.Background(), method, "/", nil)
+func performRequest(t testing.TB, r http.Handler, method string) *httptest.ResponseRecorder {
+	req, _ := http.NewRequestWithContext(t.Context(), method, "/", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 	return w
@@ -162,7 +161,7 @@ func performRequest(r http.Handler, method string) *httptest.ResponseRecorder {
 
 func TestDefault(t *testing.T) {
 	router := defaultRouter()
-	w := performRequest(router, "GET")
+	w := performRequest(t, router, "GET")
 
 	assert.Equal(t, "http://localhost:8080", w.Body.String())
 }
@@ -185,7 +184,7 @@ func TestCustom(t *testing.T) {
 		Host:   "foo.com",
 		Base:   "/base",
 	})
-	w := performRequest(router, "GET")
+	w := performRequest(t, router, "GET")
 
 	assert.Equal(t, "https://foo.com/base", w.Body.String())
 }
